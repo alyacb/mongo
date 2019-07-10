@@ -37,14 +37,13 @@
 
 USDT_PROBE_TEST() {
     // dumb test
-    //ASSERT(
-    tester.runTest(
+    ASSERT(tester.runTest(
         mongo::USDTProbe("aProbe", 15, [](auto& res, int hit) -> void {}),
-        []() -> void {
-            for (int i = 0; i < 15; i++) {
-                MONGO_USDT(aProbe);
-            }
-        });//);
+            []() -> void {
+                for (int i = 0; i < 15; i++) {
+                    MONGO_USDT(aProbe);
+                }
+            }));
 
     // test INT args
     std::vector<mongo::USDTProbe> intProbes {
