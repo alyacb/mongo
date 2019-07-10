@@ -45,7 +45,7 @@ class USDTProbeArg {
     int _length;
 
 public:
-    USDTProbeType type;  // TODO: can't be const
+    USDTProbeType type;
 
     USDTProbeArg() : _members(), type(USDTProbeType::INT) {}
     USDTProbeArg(USDTProbeType type) : _members(), type(type) {}
@@ -73,9 +73,7 @@ public:
     std::string toJSONStr();
 
     static std::string getNextAsString(std::stringstream&);
-    static std::string getNextAsString(const std::string&);
     static int getNextAsInt(std::stringstream&);
-    static int getNextAsInt(const std::string&);
 };
 
 class USDTProbe {

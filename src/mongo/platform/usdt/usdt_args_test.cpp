@@ -122,7 +122,7 @@ USDT_PROBE_TEST() {
         [](auto& res, int hit) -> void {
             for (int i = 0; i < 12; i++) {
                 std::string actual =
-                    mongo::USDTProbeArg::getNextAsString(mongo::USDTProbeArg::getNextAsString(res));
+                    mongo::USDTProbeArg::getNextAsString(res);
                 std::stringstream nexts;
                 nexts << "str" << i;
                 ASSERT_EQ(nexts.str(), actual);
@@ -132,6 +132,8 @@ USDT_PROBE_TEST() {
     for (int i = 0; i < 12; i++) {
         probe12Str.withStringArg(i >= 10 ? 6 : 5);
     }
+
+    strProbes.push_back(probe12Str);
 
     strProbes.push_back(mongo::USDTProbe("probeComplex", 1,
         [](auto& res, int hit) -> void {

@@ -38,11 +38,6 @@
 
 namespace mongo {
 
-std::string USDTProbeArg::getNextAsString(const std::string& in) {
-    std::stringstream ss(in);
-    return getNextAsString(ss);
-}
-
 std::string USDTProbeArg::getNextAsString(std::stringstream& in) {
     std::stringstream ssOut;
     char c;
@@ -66,11 +61,6 @@ std::string USDTProbeArg::getNextAsString(std::stringstream& in) {
     std::string out = ssOut.str();
     ASSERT(out.length() > 0);
     return out;
-}
-
-int USDTProbeArg::getNextAsInt(const std::string& in) {
-    std::stringstream ss(in);
-    return getNextAsInt(ss);
 }
 
 int USDTProbeArg::getNextAsInt(std::stringstream& in) {
