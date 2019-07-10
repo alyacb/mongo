@@ -32,7 +32,9 @@
 #include <string>
 #include <vector>
 
+#include "mongo/base/parse_number.h"
 #include "mongo/unittest/unittest.h"
+#include "mongo/util/assert_util.h"
 
 namespace mongo {
 
@@ -125,9 +127,23 @@ public:
         _initialize();
     }
 
+    bool runTest(const USDTProbe& probe, const std::function<void()>& toTest);
     bool runTest(const std::vector<USDTProbe>& probes, const std::function<void()>& toTest);
 
     static std::string toJSONStr(const std::vector<USDTProbe>& probes);
 };
+
+#define USDT_PROBE_TEST()                                               \
+    void testProbes(mongo::USDTProbeTest& tester);                      \
+    int main(int argc, char** argv) {                                   \
+        ASSERT_EQ(argc, 3);                                             \
+        int fdRd, fdWr;                                                 \
+        uassertStatusOK(mongo::NumberParser{}(argv[1], &fdRd));         \
+        uassertStatusOK(mongo::NumberParser{}(argv[2], &fdWr));         \
+        mongo::USDTProbeTest tester(fdRd, fdWr);                        \
+        testProbes(tester);                                             \
+        return 0;                                                       \
+    }                                                                   \
+    void testProbes(mongo::USDTProbeTest& tester)
 
 }  // namespace mongo

@@ -25,17 +25,6 @@ env.CppUnitTest(
     ]
 )
 
-# usdt_util_py = env.InstallAs(
-#     'usdt/util.py',
-#     source=['usdt/python_tester/tester/util.py.in'],
-# )
-
-# usdt_generator_py = env.InstallAs(
-#     'usdt/python_tester/generator.py',
-#     source=['usdt/python_tester/tester/generator.py.in'],
-# )
-
-
 python_testing_files = env.Glob('usdt/python_tester/*', exclude='usdt/python_tester/tests')
 
 # add usdt/python_tester/tester as a subdirectory, not as a flat file
@@ -60,10 +49,11 @@ usdt_probe_test_py = InstallFile(env, 'usdt/python_tester/usdt_probe_tester.py')
         
 env.Depends(usdt_probe_test_py, python_testing_targets)
 
-usdt_probe_test_cpp = env.Program(
-    target='usdt/usdt_probe_test',
+usdt_args_test = env.Program(
+    target='usdt/usdt_args_test',
     source=[
-        'usdt/usdt_probe_test.cpp',
+        'usdt/usdt_args_test.cpp',
+        'usdt/usdt_probe_test.cpp'
     ],
     LIBDEPS=[
         '$BUILD_DIR/mongo/base',
@@ -73,14 +63,14 @@ usdt_probe_test_cpp = env.Program(
 usdt_probe_test_dict = {
     '@usdt_probe_test_python_interpreter@' : sys.executable.replace('\\', r'\\'),
     '@usdt_probe_test_py@' : usdt_probe_test_py[0].name,
-    '@usdt_probe_tests@' : usdt_probe_test_cpp[0].name, # TODO list of execs
+    '@usdt_probe_tests@' : usdt_args_test[0].name, # TODO list of execs
 }
 
 usdt_probe_test_wrapper = env.Substfile(
     'usdt/pywrapper.py.in',
     SUBST_DICT=usdt_probe_test_dict,
 )
-env.Depends(usdt_probe_test_wrapper, [usdt_probe_test_cpp, usdt_probe_test_py])
+env.Depends(usdt_probe_test_wrapper, [usdt_args_test, usdt_probe_test_py])
 env.AddPostAction(usdt_probe_test_wrapper[0], Chmod(usdt_probe_test_wrapper[0], 'oug+x'))
 
 env.RegisterUnitTest(usdt_probe_test_wrapper[0])
