@@ -208,6 +208,7 @@ env.Library(
         'query_knobs.idl',
     ],
     LIBDEPS_PRIVATE=[
+        '$BUILD_DIR/mongo/idl/feature_flag',
         '$BUILD_DIR/mongo/idl/server_parameter'
     ]
 )
