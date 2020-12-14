@@ -1,12 +1,13 @@
 /**
  * Tests that resource consumption metrics are reported in the profiler.
  *
- *  @tags: [
- *    requires_capped,
- *    requires_fcv_47,
- *    requires_replication,
- *    requires_wiredtiger,
- *  ]
+ * @tags: [
+ *   requires_capped,
+ *   requires_fcv_47,
+ *   requires_replication,
+ *   requires_wiredtiger,
+ *   sbe_incompatible,
+ * ]
  */
 (function() {
 "use strict";

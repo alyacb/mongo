@@ -1,8 +1,13 @@
 /**
  * Tests restarting mongod with 'enableMajorityReadConcern' varying between true and false.
  *
- * @tags: [requires_persistence, requires_replication, requires_majority_read_concern,
- * requires_wiredtiger]
+ * @tags: [
+ *   requires_majority_read_concern,
+ *   requires_persistence,
+ *   requires_replication,
+ *   requires_wiredtiger,
+ *   sbe_incompatible,
+ * ]
  */
 (function() {
 "use strict";

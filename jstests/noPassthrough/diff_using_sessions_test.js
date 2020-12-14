@@ -2,7 +2,10 @@
  * Tests the ReplSetTest#getCollectionDiffUsingSessions() method for comparing the contents between
  * a primary and secondary server.
  *
- * @tags: [requires_replication]
+ * @tags: [
+ *   requires_replication,
+ *   sbe_incompatible,
+ * ]
  */
 (function() {
 "use strict";

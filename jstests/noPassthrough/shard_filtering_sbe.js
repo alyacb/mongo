@@ -2,7 +2,10 @@
  * This test is intended to exercise shard filtering logic. This test works by sharding a
  * collection, and then inserting orphaned documents directly into one of the shards. It then runs a
  * find() and makes sure that orphaned documents are filtered out.
- * @tags: [requires_sharding]
+ * @tags: [
+ *   requires_sharding,
+ *   sbe_incompatible,
+ * ]
  */
 (function() {
 "use strict";

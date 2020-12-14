@@ -1,4 +1,8 @@
-// @tags: [requires_wiredtiger, requires_replication]
+// @tags: [
+//   requires_replication,
+//   requires_wiredtiger,
+//   sbe_incompatible,
+// ]
 (function() {
 "use strict";
 

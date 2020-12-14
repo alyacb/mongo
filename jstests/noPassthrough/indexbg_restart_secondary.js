@@ -4,9 +4,10 @@
  * The index build should resume when the secondary is restarted.
  *
  * @tags: [
- *   requires_persistence,
  *   requires_journaling,
+ *   requires_persistence,
  *   requires_replication,
+ *   sbe_incompatible,
  * ]
  */
 

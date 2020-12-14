@@ -1,5 +1,9 @@
 // Confirms basic killOp execution via mongod and mongos.
-// @tags: [requires_replication, requires_sharding]
+// @tags: [
+//   requires_replication,
+//   requires_sharding,
+//   sbe_incompatible,
+// ]
 
 (function() {
 "use strict";

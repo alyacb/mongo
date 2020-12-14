@@ -1,7 +1,11 @@
 /**
  * Confirms inclusion of query, command object and planSummary in currentOp() for CRUD operations.
  * This test should not be run in the parallel suite as it sets fail points.
- * @tags: [requires_replication, requires_sharding]
+ * @tags: [
+ *   requires_replication,
+ *   requires_sharding,
+ *   sbe_incompatible,
+ * ]
  */
 (function() {
 "use strict";
