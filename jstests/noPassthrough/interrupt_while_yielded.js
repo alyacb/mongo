@@ -24,9 +24,6 @@ assert.commandWorked(db.adminCommand({setParameter: 1, internalQueryExecYieldIte
  * Executes 'queryFn' in a parallel shell while a failpoint is enabled to hang operations during
  * yield. Ensures that operation run by 'queryFn' reaches the yield point, then runs killOp()
  * against the yielded operation.
- *
- * The 'useSbe' boolean allows to caller to indicate whether the test should run using the classic
- * query execution engine or the slot-based execution engine.
  */
 function runTestWithQuery(queryFn) {
     let waitForParallelShell = null;

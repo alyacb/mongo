@@ -10621,7 +10621,7 @@ buildvariants:
 
 - name: enterprise-rhel-62-64-bit-dynamic-sbe
   display_name: "Shared Library Enterprise RHEL 6.2 (SBE)"
-  batchtime: 60 # 1 hour
+  batchtime: 1440 # 1 day
   stepback: false
   modules:
   - enterprise
@@ -10644,7 +10644,7 @@ buildvariants:
     num_scons_link_jobs_available: 0.99
     test_flags: >-
         --mongodSetParameters="{featureFlagSBE: true}"
-        --excludeWithAnyTags=sbe_incompatible,uses_transactions
+        --excludeWithAnyTags=sbe_incompatible
   tasks:
   - name: compile_parallel_TG
     distros:

@@ -103,8 +103,6 @@ function runTests({conn, readMode, currentOp, truncatedOps, localOps}) {
      *  currentOp().query object.
      *  - 'testObj.operation' - The operation to test against. Will look for this to be the value
      *  of the currentOp().op field.
-     *  - 'testObj.useSbe' - True if the server should be configured to use the slot-based execution
-     *  engine rather than the classic query execution engine.
      */
     function confirmCurrentOpContents(testObj) {
         // Force queries to hang on yield to allow for currentOp capture.
