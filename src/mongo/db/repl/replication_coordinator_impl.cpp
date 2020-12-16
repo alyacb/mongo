@@ -2925,6 +2925,7 @@ Status ReplicationCoordinatorImpl::checkCanServeReadsFor_UNSAFE(OperationContext
         const auto msg = client->supportsHello()
             ? "not primary or secondary; cannot currently read from this replSet member"_sd
             : "not master or secondary; cannot currently read from this replSet member"_sd;
+        printStackTrace();
         return Status(ErrorCodes::NotPrimaryOrSecondary, msg);
     }
 
