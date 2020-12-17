@@ -1,7 +1,11 @@
 /**
  * Confirms inclusion of query, command object and planSummary in currentOp() for CRUD operations.
  * This test should not be run in the parallel suite as it sets fail points.
- * @tags: [requires_replication, requires_sharding]
+ * @tags: [
+ *    requires_replication,
+ *    requires_sharding,
+ *    sbe_incompatible
+ * ]
  */
 (function() {
 "use strict";
@@ -115,10 +119,12 @@ function runTests({conn, readMode, currentOp, truncatedOps, localOps}) {
         // of the 'useSbe' option that individual test cases can configure. Instead, this test as a
         // whole should run against build variants where SBE is both on and off in order to get the
         // necessary test coverage.
-        const sbeEnabled = FixtureHelpers.runCommandOnEachPrimary({
-            db: conn.getDB("admin"),
-            cmdObj: {getParameter: 1, featureFlagSBE: 1}
-        }).reduce((previous, current) => previous && current).featureFlagSBE.value;
+        const sbeEnabled =
+            FixtureHelpers
+                .runCommandOnEachPrimary(
+                    {db: conn.getDB("admin"), cmdObj: {getParameter: 1, featureFlagSBE: 1}})
+                .reduce((previous, current) => previous && current)
+                .featureFlagSBE.value;
 
         if (sbeEnabled != useSbe) {
             return;
