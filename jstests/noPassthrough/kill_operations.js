@@ -2,7 +2,7 @@
 // @tags: [
 //   requires_replication,
 //   requires_sharding,
-//   sbe_incompatible
+//   sbe_incompatible,
 // ]
 
 (function() {

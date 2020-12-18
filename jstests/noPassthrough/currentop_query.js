@@ -4,7 +4,7 @@
  * @tags: [
  *    requires_replication,
  *    requires_sharding,
- *    sbe_incompatible
+ *    sbe_incompatible,
  * ]
  */
 (function() {
@@ -103,33 +103,8 @@ function runTests({conn, readMode, currentOp, truncatedOps, localOps}) {
      *  currentOp().query object.
      *  - 'testObj.operation' - The operation to test against. Will look for this to be the value
      *  of the currentOp().op field.
-     *  - 'testObj.useSbe' - True if the server should be configured to use the slot-based execution
-     *  engine rather than the classic query execution engine.
      */
     function confirmCurrentOpContents(testObj) {
-        const useSbe = testObj.useSbe || false;
-        // TODO SERVER-50712: SBE is not currently expected to be able to run queries that require
-        // shard filtering. If the test asks for SBE and we are running against mongos, just skip
-        // this case.
-        if (useSbe && FixtureHelpers.isMongos(conn.getDB("admin"))) {
-            return;
-        }
-
-        // TODO SERVER-51970: When the 'sbe_incompatible' tag is removed, we should also get rid
-        // of the 'useSbe' option that individual test cases can configure. Instead, this test as a
-        // whole should run against build variants where SBE is both on and off in order to get the
-        // necessary test coverage.
-        const sbeEnabled =
-            FixtureHelpers
-                .runCommandOnEachPrimary(
-                    {db: conn.getDB("admin"), cmdObj: {getParameter: 1, featureFlagSBE: 1}})
-                .reduce((previous, current) => previous && current)
-                .featureFlagSBE.value;
-
-        if (sbeEnabled != useSbe) {
-            return;
-        }
-
         // Force queries to hang on yield to allow for currentOp capture.
         FixtureHelpers.runCommandOnEachPrimary({
             db: conn.getDB("admin"),
@@ -276,13 +251,12 @@ function runTests({conn, readMode, currentOp, truncatedOps, localOps}) {
             {
                 test: function(db) {
                     assert.eq(
-                        db.currentop_query.find({a: 1}).comment("currentop_query_sbe").itcount(),
+                        db.currentop_query.find({a: 1}).comment("currentop_query").itcount(),
                         1);
                 },
                 command: "find",
-                useSbe: true,
                 planSummary: "COLLSCAN",
-                currentOpFilter: {"command.comment": "currentop_query_sbe", numYields: {$gt: 0}}
+                currentOpFilter: {"command.comment": "currentop_query", numYields: {$gt: 0}}
             },
             {
                 test: function(db) {
